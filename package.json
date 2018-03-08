@@ -1,0 +1,10 @@
+{
+  "name": "logbook-es6",
+  "version": "1.0.0",
+  "description": "Logbook app built on ES6",
+  "main": "index.js",
+  "author": "morten@hindsholm.dk",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
