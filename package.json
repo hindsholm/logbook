@@ -5,6 +5,8 @@
   "main": "index.js",
   "author": "morten@hindsholm.dk",
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@types/openlayers": "^4.6.4"
   }
 }
