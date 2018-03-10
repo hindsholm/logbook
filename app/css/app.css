@@ -1,0 +1,23 @@
+html,
+body {
+    height: 100%
+}
+
+header {
+    height: 140px;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    overflow: hidden;
+    background-color: aqua;
+    height: calc(100% - 140px);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100%;
+}
