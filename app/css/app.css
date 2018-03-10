@@ -1,21 +1,27 @@
-html,
+html {
+    height: 100%;
+}
+
 body {
-    height: 100%
+    position: absolute;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+header,
+main {
+    margin: 0;
+    padding: 0;
 }
 
 header {
-    height: 140px;
-    margin: 0;
-    padding: 0;
+    flex: none;
 }
 
 main {
+    flex: 1 1 100%;
     overflow: hidden;
-    background-color: aqua;
-    height: calc(100% - 140px);
-    width: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 #map {
