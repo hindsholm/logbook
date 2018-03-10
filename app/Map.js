@@ -28,4 +28,17 @@ export default class Map {
             view: view
         });
     }
+
+    loadTrack(url) {
+        let trackSrc = new ol.source.Vector({
+            format: new ol.format.GPX(),
+            url: url
+        });
+        trackSrc.once('change', e => {
+            if (this.map) {
+                this.map.getView().fit(trackSrc.getExtent(), { size: this.map.getSize(), padding: [10, 10, 10, 10] });
+            }
+        });
+        this.trackLayer.setSource(trackSrc);
+    }
 }
