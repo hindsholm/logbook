@@ -2,6 +2,9 @@ export default class Map {
     constructor() {
         this.trackLayer = new ol.layer.Vector({
             source: new ol.source.Vector(),
+            style: new ol.style.Style({
+                stroke: new ol.style.Stroke({ color: 'red', width: 2 })
+            }),
             renderOrder: null
         });
         let land = new ol.layer.Tile({
