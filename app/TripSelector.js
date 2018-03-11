@@ -4,10 +4,36 @@ export default class TripSelector {
         this.yearSelector = new YearSelector(this);
         this.monthSelector = new MonthSelector(this);
         this.daySelector = new DaySelector(this);
+        document.querySelector('#previous').onclick = _ => {
+            this.previousTrip();
+        };
+        document.querySelector('#next').onclick = _ => {
+            this.nextTrip();
+        };
     }
 
     onTripSelected(listener) {
         this.listener = listener;
+    }
+
+    hasPrevious() {
+        return this.track && this.tracks.indexOf(this.track) > 0;
+    }
+
+    previousTrip() {
+        if (this.hasPrevious()) {
+            this.setTrack(this.tracks[this.tracks.indexOf(this.track) - 1]);
+        }
+    }
+
+    hasNext() {
+        return this.track && this.tracks.indexOf(this.track) < this.tracks.length - 1;
+    }
+
+    nextTrip() {
+        if (this.hasNext()) {
+            this.setTrack(this.tracks[this.tracks.indexOf(this.track) + 1]);
+        }
     }
 
     setYear(year) {
@@ -18,12 +44,15 @@ export default class TripSelector {
     }
 
     setMonth(month) {
-        this.month = month;
         this.daySelector.reset();
-        this.daySelector.setYearMonth(this.year, this.month);
+        this.daySelector.setYearMonth(this.year, month);
     }
 
     setTrack(track) {
+        this.track = track;
+        this.yearSelector.setTitle(track.year);
+        this.monthSelector.setTitle(track.month);
+        this.daySelector.setTitle(track.day);
         if (this.listener) {
             this.listener(track);
         }
