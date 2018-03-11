@@ -33,10 +33,18 @@ export default class TrackService {
             let href = link.getAttribute('href'),
                 isGpx = href.match(/([^/]+)\.gpx$/);
             if (isGpx) {
-                tracks.push({
-                    name: isGpx[1].replace(/(\d{4})-?(\d{2})-?(\d{2})(.*)/, '$1-$2-$3$4') || isGpx[1],
-                    url: this.TRACK_URL + href
-                });
+                let ymd = isGpx[1].match(/(\d{4})-?(\d{2})-?(\d{2})(.*)/);
+                if (ymd) {
+                    tracks.push({
+                        name: `${ymd[1]}-${ymd[2]}-${ymd[3]}${ymd[4]}`,
+                        url: this.TRACK_URL + href,
+                        year: ymd[1],
+                        month: ymd[2],
+                        day: ymd[3]
+                    });
+                } else {
+                    console.log(`${href} does not comply with yyyy-mm-dd format`);
+                }
             }
         }
         tracks.sort((a, b) => {
