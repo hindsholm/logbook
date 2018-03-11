@@ -32,10 +32,11 @@ export default class Map {
         });
     }
 
-    loadTrack(url) {
+    loadTrack(track) {
+        console.log('Loading ' + track.name);
         let trackSrc = new ol.source.Vector({
             format: new ol.format.GPX(),
-            url: url
+            url: track.url
         });
         trackSrc.once('change', e => {
             if (this.map) {
