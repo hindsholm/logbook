@@ -143,12 +143,9 @@ class DaySelector {
         this.tripSelector = tripSelector;
         this.node = document.querySelector('#day');
         this.node.addEventListener('change', evt => {
-            let day = evt.target['selectedOptions'][0].value;
-            this.tripSelector.tracks.forEach(track => {
-                if (this.year === track.year && this.month === track.month && day === track.day) {
-                    this.tripSelector.trackSelected(track);
-                }
-            });
+            let name = evt.target['selectedOptions'][0].value;
+            let track = this.tripSelector.tracks.find(t => name === t.name);
+            this.tripSelector.trackSelected(track);
         });
     }
 
@@ -176,7 +173,7 @@ class DaySelector {
     setTrack(track) {
         this.setYear(track.year);
         this.setMonth(track.month);
-        this.node['value'] = track.day;
+        this.node['value'] = track.name;
     }
 
     reset() {
@@ -186,6 +183,7 @@ class DaySelector {
     createMenuItem(track) {
         let option = document.createElement('option');
         option.innerText = track.day;
+        option.value = track.name;
         this.node.appendChild(option);
     }
 }
