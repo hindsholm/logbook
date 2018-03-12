@@ -1,15 +1,18 @@
+/**
+ * Responsible for selecting the trip to show.
+ */
 export default class TripSelector {
     constructor(tracks) {
         this.tracks = tracks;
         this.yearSelector = new YearSelector(this);
         this.monthSelector = new MonthSelector(this);
         this.daySelector = new DaySelector(this);
-        document.querySelector('#previous').onclick = _ => {
+        document.querySelector('#previous').addEventListener('click', _ => {
             this.previousTrip();
-        };
-        document.querySelector('#next').onclick = _ => {
+        });
+        document.querySelector('#next').addEventListener('click', _ => {
             this.nextTrip();
-        };
+        });
     }
 
     onTripSelected(listener) {
@@ -22,7 +25,7 @@ export default class TripSelector {
 
     previousTrip() {
         if (this.hasPrevious()) {
-            this.setTrack(this.tracks[this.tracks.indexOf(this.track) - 1]);
+            this.trackSelected(this.tracks[this.tracks.indexOf(this.track) - 1]);
         }
     }
 
@@ -32,27 +35,25 @@ export default class TripSelector {
 
     nextTrip() {
         if (this.hasNext()) {
-            this.setTrack(this.tracks[this.tracks.indexOf(this.track) + 1]);
+            this.trackSelected(this.tracks[this.tracks.indexOf(this.track) + 1]);
         }
     }
 
-    setYear(year) {
+    yearSelected(year) {
         this.year = year;
-        this.monthSelector.reset();
-        this.daySelector.reset();
         this.monthSelector.setYear(year);
+        this.daySelector.setYear(year);
     }
 
-    setMonth(month) {
-        this.daySelector.reset();
-        this.daySelector.setYearMonth(this.year, month);
+    monthSelected(month) {
+        this.daySelector.setMonth(month);
     }
 
-    setTrack(track) {
+    trackSelected(track) {
         this.track = track;
-        this.yearSelector.setTitle(track.year);
-        this.monthSelector.setTitle(track.month);
-        this.daySelector.setTitle(track.day);
+        this.yearSelector.setTrack(track);
+        this.monthSelector.setTrack(track);
+        this.daySelector.setTrack(track);
         if (this.listener) {
             this.listener(track);
         }
@@ -71,6 +72,10 @@ class YearSelector {
         });
     }
 
+    setTrack(track) {
+        this.setTitle(track.year);
+    }
+
     setTitle(title) {
         this.node.firstElementChild.innerHTML = title;
     }
@@ -85,10 +90,10 @@ class YearSelector {
 
     createMenuItem(year) {
         let li = document.createElement('li');
-        li.innerHTML = `<a href="javascript:void(0)">${year}</a>`;
+        li.innerHTML = `<a href="javascript:void(0);">${year}</a>`;
         li.onclick = _ => {
             this.setTitle(year);
-            this.tripSelector.setYear(year);
+            this.tripSelector.yearSelected(year);
         };
         this.ul.appendChild(li);
     }
@@ -103,11 +108,19 @@ class MonthSelector {
     }
 
     setYear(year) {
-        this.reset();
-        let months = this.getMonthsForYear(year);
-        months.forEach(month => {
-            this.createMenuItem(month);
-        });
+        if (this.year !== year) {
+            this.year = year;
+            this.reset();
+            let months = this.getMonthsForYear(year);
+            months.forEach(month => {
+                this.createMenuItem(month);
+            });
+        }
+    }
+
+    setTrack(track) {
+        this.setYear(track.year);
+        this.setTitle(track.month);
     }
 
     reset() {
@@ -131,10 +144,10 @@ class MonthSelector {
 
     createMenuItem(month) {
         let li = document.createElement('li');
-        li.innerHTML = `<a href="javascript:void(0)">${month}</a>`;
+        li.innerHTML = `<a href="javascript:void(0);">${month}</a>`;
         li.onclick = evt => {
             this.setTitle(month);
-            this.tripSelector.setMonth(month);
+            this.tripSelector.monthSelected(month);
         };
         this.ul.appendChild(li);
     }
@@ -148,13 +161,29 @@ class DaySelector {
         this.node.appendChild(this.ul);
     }
 
-    setYearMonth(year, month) {
-        this.reset();
-        this.tripSelector.tracks.forEach(track => {
-            if (track.year === year && track.month === month) {
-                this.createMenuItem(track);
-            }
-        });
+    setYear(year) {
+        if (this.year !== year) {
+            this.year = year;
+            this.reset();
+        }
+    }
+
+    setMonth(month) {
+        if (this.month !== month) {
+            this.month = month;
+            this.reset();
+            this.tripSelector.tracks.forEach(track => {
+                if (track.year === this.year && track.month === month) {
+                    this.createMenuItem(track);
+                }
+            });
+        }
+    }
+
+    setTrack(track) {
+        this.setYear(track.year);
+        this.setMonth(track.month);
+        this.setTitle(track.day);
     }
 
     reset() {
@@ -168,10 +197,10 @@ class DaySelector {
 
     createMenuItem(track) {
         let li = document.createElement('li');
-        li.innerHTML = `<a href="javascript:void(0)">${track.day}</a>`;
+        li.innerHTML = `<a href="javascript:void(0);">${track.day}</a>`;
         li.onclick = _ => {
             this.setTitle(track.day);
-            this.tripSelector.setTrack(track);
+            this.tripSelector.trackSelected(track);
         };
         this.ul.appendChild(li);
     }
