@@ -64,6 +64,9 @@ class YearSelector {
     constructor(tripSelector) {
         this.tripSelector = tripSelector;
         this.node = document.querySelector('#year');
+        this.node.addEventListener('change', evt => {
+            this.tripSelector.yearSelected(evt.target['selectedOptions'][0].value);
+        });
         let years = this.getUniqueYears(tripSelector.tracks);
         years.forEach(year => {
             this.createMenuItem(year);
@@ -85,9 +88,6 @@ class YearSelector {
     createMenuItem(year) {
         let option = document.createElement('option');
         option.innerText = year;
-        option.onclick = _ => {
-            this.tripSelector.yearSelected(year);
-        };
         this.node.appendChild(option);
     }
 }
@@ -96,6 +96,9 @@ class MonthSelector {
     constructor(tripSelector) {
         this.tripSelector = tripSelector;
         this.node = document.querySelector('#month');
+        this.node.addEventListener('change', evt => {
+            this.tripSelector.monthSelected(evt.target['selectedOptions'][0].value);
+        });
     }
 
     setYear(year) {
@@ -115,7 +118,7 @@ class MonthSelector {
     }
 
     reset() {
-        this.node.innerHTML = '<option>Month</option>';
+        this.node.innerHTML = '<option disabled selected>Month</option>';
     }
 
     getMonthsForYear(year) {
@@ -131,9 +134,6 @@ class MonthSelector {
     createMenuItem(month) {
         let option = document.createElement('option');
         option.innerText = month;
-        option.onclick = evt => {
-            this.tripSelector.monthSelected(month);
-        };
         this.node.appendChild(option);
     }
 }
@@ -142,6 +142,14 @@ class DaySelector {
     constructor(tripSelector) {
         this.tripSelector = tripSelector;
         this.node = document.querySelector('#day');
+        this.node.addEventListener('change', evt => {
+            let day = evt.target['selectedOptions'][0].value;
+            this.tripSelector.tracks.forEach(track => {
+                if (this.year === track.year && this.month === track.month && day === track.day) {
+                    this.tripSelector.trackSelected(track);
+                }
+            });
+        });
     }
 
     setYear(year) {
@@ -157,6 +165,7 @@ class DaySelector {
             this.month = month;
             this.reset();
             this.tripSelector.tracks.forEach(track => {
+                // TODO find a better way of finding the track
                 if (track.year === this.year && track.month === month) {
                     this.createMenuItem(track);
                 }
@@ -171,15 +180,12 @@ class DaySelector {
     }
 
     reset() {
-        this.node.innerHTML = '<option>Day</option>';
+        this.node.innerHTML = '<option disabled selected>Day</option>';
     }
 
     createMenuItem(track) {
         let option = document.createElement('option');
         option.innerText = track.day;
-        option.onclick = _ => {
-            this.tripSelector.trackSelected(track);
-        };
         this.node.appendChild(option);
     }
 }

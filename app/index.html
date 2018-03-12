@@ -7,6 +7,7 @@
     <title>Logbook</title>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/surface_styles.css">
     <link rel="stylesheet" href="css/app.css">
     <script type="text/javascript" src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
@@ -15,17 +16,21 @@
 <body>
     <header class="container--baseline container--wrap-s">
         <h1 class="m--1 g--3 g-s--12">Logbook</h1>
-        <button id="previous" class="nudge--right" title="Previous Trip">&larr;</button>
+        <button id="previous" class="btn--raised nudge--right" title="Previous Trip">
+            <i class="material-icons">navigate_before</i>
+        </button>
         <select id="year">
-            <option>Year</option>
+            <option disabled selected value="">Year</option>
         </select>
         <select id="month">
-            <option>Month</option>
+            <option disabled selected value="">Month</option>
         </select>
         <select id="day">
-            <option>Day</option>
+            <option disabled selected value="">Day</option>
         </select>
-        <button id="next" class="nudge--left" title="Next Trip">&rarr;</button>
+        <button id="next" class="btn--raised nudge--left" title="Next Trip">
+            <i class="material-icons">navigate_next</i>
+        </button>
     </header>
     <main>
         <div id="map"></div>
