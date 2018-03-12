@@ -51,3 +51,7 @@ select {
 select option {
     background-color: #2980b9;
 }
+
+select:invalid {
+    box-shadow: none !important;
+}
