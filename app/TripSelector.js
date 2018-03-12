@@ -118,7 +118,7 @@ class MonthSelector {
     }
 
     reset() {
-        this.node.innerHTML = '<option disabled selected>Month</option>';
+        this.node.innerHTML = '<option disabled selected value="">Month</option>';
     }
 
     getMonthsForYear(year) {
@@ -180,7 +180,7 @@ class DaySelector {
     }
 
     reset() {
-        this.node.innerHTML = '<option disabled selected>Day</option>';
+        this.node.innerHTML = '<option disabled selected value="">Day</option>';
     }
 
     createMenuItem(track) {

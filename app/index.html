@@ -14,29 +14,32 @@
 </head>
 
 <body>
-    <header class="container--baseline container--wrap-m">
-        <h1 class="m--1 g--3 g-s--12">Logbook</h1>
-        <button id="previous" class="btn--raised nudge--right" title="Previous Trip">
-            <i class="material-icons">navigate_before</i>
-        </button>
-        <select id="year" required>
-            <option disabled selected value="">Year</option>
-        </select>
-        <select id="month" required>
-            <option disabled selected value="">Month</option>
-        </select>
-        <select id="day" required>
-            <option disabled selected value="">Day</option>
-        </select>
-        <button id="next" class="btn--raised nudge--left" title="Next Trip">
-            <i class="material-icons">navigate_next</i>
-        </button>
+    <header class="container--baseline">
+        <h1 class="nudge--left">Logbook</h1>
+        <div style="flex: 1 1 100%"></div>
+        <div style="flex: none">
+            <button id="previous" class="btn--raised nudge--right" title="Previous Trip">
+                <i class="material-icons">navigate_before</i>
+            </button>
+            <select id="year" required>
+                <option disabled selected value="">Year</option>
+            </select>
+            <select id="month" required>
+                <option disabled selected value="">Month</option>
+            </select>
+            <select id="day" required>
+                <option disabled selected value="">Day</option>
+            </select>
+            <button id="next" class="btn--raised nudge--left nudge--right" title="Next Trip">
+                <i class="material-icons">navigate_next</i>
+            </button>
+        </div>
     </header>
     <main>
         <div id="map"></div>
     </main>
     <footer>
-        <div class="g--10 m--1 no-margin-vertical color--white">
+        <div class="nudge--left no-margin-vertical color--white">
             Made with ES6
         </div>
     </footer>

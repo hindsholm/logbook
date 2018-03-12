@@ -17,6 +17,7 @@ main {
 
 header {
     flex: none;
+    padding-top: 1em;
 }
 
 main {
