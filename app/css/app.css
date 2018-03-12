@@ -35,6 +35,7 @@ select {
     padding-right: 20px;
     margin: 2px;
     text-align: center;
+    font-size: 120%;
 
     /* Removes the default <select> styling */
     -webkit-appearance: none;

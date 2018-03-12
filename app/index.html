@@ -14,18 +14,18 @@
 </head>
 
 <body>
-    <header class="container--baseline container--wrap-s">
+    <header class="container--baseline container--wrap-m">
         <h1 class="m--1 g--3 g-s--12">Logbook</h1>
         <button id="previous" class="btn--raised nudge--right" title="Previous Trip">
             <i class="material-icons">navigate_before</i>
         </button>
-        <select id="year">
+        <select id="year" required>
             <option disabled selected value="">Year</option>
         </select>
-        <select id="month">
+        <select id="month" required>
             <option disabled selected value="">Month</option>
         </select>
-        <select id="day">
+        <select id="day" required>
             <option disabled selected value="">Day</option>
         </select>
         <button id="next" class="btn--raised nudge--left" title="Next Trip">
