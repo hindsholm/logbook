@@ -13,33 +13,28 @@
 </head>
 
 <body>
-    <header class="container--baseline">
-        <h1 class="m--1 g--4 g-s--12">Logbook</h1>
-        <nav class="g--5 g-m--8 nav--horizontal">
-            <ul>
-                <li>
-                    <a id="previous" href="javascript:void(0);">&larr;</a>
-                </li>
-                &nbsp;
-                <li id="year" class="dropdown">
-                    <a href="#">Year</a>
-                </li>
-                <li id="month" class="dropdown">
-                    <a href="#">Month</a>
-                </li>
-                <li id="day" class="dropdown">
-                    <a href="#">Day</a>
-                </li>
-                &nbsp;
-                <li>
-                    <a id="next" href="javascript:void(0);">&rarr;</a>
-                </li>
-            </ul>
-        </nav>
+    <header class="container--baseline container--wrap-s">
+        <h1 class="m--1 g--3 g-s--12">Logbook</h1>
+        <button id="previous" class="nudge--right" title="Previous Trip">&larr;</button>
+        <select id="year">
+            <option>Year</option>
+        </select>
+        <select id="month">
+            <option>Month</option>
+        </select>
+        <select id="day">
+            <option>Day</option>
+        </select>
+        <button id="next" class="nudge--left" title="Next Trip">&rarr;</button>
     </header>
     <main>
         <div id="map"></div>
     </main>
+    <footer>
+        <div class="g--10 m--1 no-margin-vertical color--white">
+            Made with EcmaScript 2015
+        </div>
+    </footer>
     <script type="module" src="App.js"></script>
 </body>
 
