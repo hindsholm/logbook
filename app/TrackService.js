@@ -1,6 +1,6 @@
 export default class TrackService {
     constructor() {
-        this.TRACK_URL = 'http://pemba.hindsholm.dk/tracks/';
+        this.TRACK_URL = 'http://hindsholm.dk/pemba/tracks/';
         this.cache = undefined;
     }
 

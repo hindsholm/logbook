@@ -65,18 +65,17 @@ export default class TripSelector {
 class YearSelector {
     constructor(tripSelector) {
         this.tripSelector = tripSelector;
-        this.node = document.querySelector('#year');
-        this.node.addEventListener('change', evt => {
-            this.tripSelector.yearSelected(evt.target['selectedOptions'][0].value);
-        });
         let years = this.getUniqueYears(tripSelector.tracks);
-        years.forEach(year => {
-            this.createMenuItem(year);
+        this.select = document.querySelector('#year');
+        this.select.innerHTML = `<option disabled selected value="">Year</option>
+            ${years.map(year => `<option>${year}</option>`).join('')}`;
+        this.select.addEventListener('change', evt => {
+            this.tripSelector.yearSelected(evt.target['selectedOptions'][0].value);
         });
     }
 
     setTrack(track) {
-        this.node['value'] = track.year;
+        this.select['value'] = track.year;
     }
 
     getUniqueYears(tracks) {
@@ -84,21 +83,15 @@ class YearSelector {
         tracks.forEach(track => {
             years.add(track.year);
         });
-        return years;
-    }
-
-    createMenuItem(year) {
-        let option = document.createElement('option');
-        option.innerText = year;
-        this.node.appendChild(option);
+        return Array.from(years);
     }
 }
 
 class MonthSelector {
     constructor(tripSelector) {
         this.tripSelector = tripSelector;
-        this.node = document.querySelector('#month');
-        this.node.addEventListener('change', evt => {
+        this.select = document.querySelector('#month');
+        this.select.addEventListener('change', evt => {
             this.tripSelector.monthSelected(evt.target['selectedOptions'][0].value);
         });
     }
@@ -106,21 +99,19 @@ class MonthSelector {
     setYear(year) {
         if (this.year !== year) {
             this.year = year;
-            this.reset();
             let months = this.getMonthsForYear(year);
-            months.forEach(month => {
-                this.createMenuItem(month);
-            });
+            this.select.innerHTML = `<option disabled selected value="">Month</option>
+                ${months.map(month => `<option>${month}</option>`).join('')}`;
         }
     }
 
     setTrack(track) {
         this.setYear(track.year);
-        this.node['value'] = track.month;
+        this.select['value'] = track.month;
     }
 
     reset() {
-        this.node.innerHTML = '<option disabled selected value="">Month</option>';
+        this.select.innerHTML = '<option disabled selected value="">Month</option>';
     }
 
     getMonthsForYear(year) {
@@ -130,21 +121,15 @@ class MonthSelector {
                 months.add(track.month);
             }
         });
-        return months;
-    }
-
-    createMenuItem(month) {
-        let option = document.createElement('option');
-        option.innerText = month;
-        this.node.appendChild(option);
+        return Array.from(months);
     }
 }
 
 class DaySelector {
     constructor(tripSelector) {
         this.tripSelector = tripSelector;
-        this.node = document.querySelector('#day');
-        this.node.addEventListener('change', evt => {
+        this.select = document.querySelector('#day');
+        this.select.addEventListener('change', evt => {
             let name = evt.target['selectedOptions'][0].value;
             let track = this.tripSelector.tracks.find(t => name === t.name);
             this.tripSelector.trackSelected(track);
@@ -174,17 +159,17 @@ class DaySelector {
     setTrack(track) {
         this.setYear(track.year);
         this.setMonth(track.month);
-        this.node['value'] = track.name;
+        this.select['value'] = track.name;
     }
 
     reset() {
-        this.node.innerHTML = '<option disabled selected value="">Day</option>';
+        this.select.innerHTML = '<option disabled selected value="">Day</option>';
     }
 
     createMenuItem(track) {
         let option = document.createElement('option');
         option.innerText = track.day;
         option.value = track.name;
-        this.node.appendChild(option);
+        this.select.appendChild(option);
     }
 }
