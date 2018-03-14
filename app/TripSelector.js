@@ -67,8 +67,7 @@ class YearSelector {
         this.tripSelector = tripSelector;
         let years = this.getUniqueYears(tripSelector.tracks);
         this.select = document.querySelector('#year');
-        this.select.innerHTML = `<option disabled selected value="">Year</option>
-            ${years.map(year => `<option>${year}</option>`).join('')}`;
+        this.select.innerHTML = '<option disabled selected value="">Year</option>' + years.map(year => `<option>${year}</option>`).join('');
         this.select.addEventListener('change', evt => {
             this.tripSelector.yearSelected(evt.target['selectedOptions'][0].value);
         });
@@ -100,18 +99,14 @@ class MonthSelector {
         if (this.year !== year) {
             this.year = year;
             let months = this.getMonthsForYear(year);
-            this.select.innerHTML = `<option disabled selected value="">Month</option>
-                ${months.map(month => `<option>${month}</option>`).join('')}`;
+            this.select.innerHTML =
+                '<option disabled selected value="">Month</option>' + months.map(month => `<option>${month}</option>`).join('');
         }
     }
 
     setTrack(track) {
         this.setYear(track.year);
         this.select['value'] = track.month;
-    }
-
-    reset() {
-        this.select.innerHTML = '<option disabled selected value="">Month</option>';
     }
 
     getMonthsForYear(year) {
@@ -147,12 +142,12 @@ class DaySelector {
     setMonth(month) {
         if (this.month !== month) {
             this.month = month;
-            this.reset();
-            this.tripSelector.tracks.forEach(track => {
-                if (track.year === this.year && track.month === month) {
-                    this.createMenuItem(track);
-                }
-            });
+            this.select.innerHTML =
+                '<option disabled selected value="">Day</option>' +
+                this.tripSelector.tracks
+                    .filter(track => track.year === this.year && track.month === month)
+                    .map(track => `<option value="${track.name}">${track.day}</option>`)
+                    .join('');
         }
     }
 
@@ -164,12 +159,5 @@ class DaySelector {
 
     reset() {
         this.select.innerHTML = '<option disabled selected value="">Day</option>';
-    }
-
-    createMenuItem(track) {
-        let option = document.createElement('option');
-        option.innerText = track.day;
-        option.value = track.name;
-        this.select.appendChild(option);
     }
 }
