@@ -1,3 +1,5 @@
+import Trip from './Trip.js';
+
 /**
  * Responsible for selecting the trip to show.
  */
@@ -55,7 +57,7 @@ export default class TripSelector {
         this.monthSelector.setTrack(track);
         this.daySelector.setTrack(track);
         if (this.listener) {
-            this.listener(track);
+            this.listener(new Trip(track));
         }
     }
 }
@@ -162,7 +164,6 @@ class DaySelector {
             this.month = month;
             this.reset();
             this.tripSelector.tracks.forEach(track => {
-                // TODO find a better way of finding the track
                 if (track.year === this.year && track.month === month) {
                     this.createMenuItem(track);
                 }

@@ -8,7 +8,7 @@ export default class App {
         this.trackService = new TrackService();
         this.trackService.getTracks().then(tracks => {
             this.tripSelector = new TripSelector(tracks);
-            this.tripSelector.onTripSelected(track => this.map.loadTrack(track));
+            this.tripSelector.onTripSelected(trip => this.map.loadTrip(trip));
         });
     }
 }

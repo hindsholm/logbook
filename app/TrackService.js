@@ -14,17 +14,6 @@ export default class TrackService {
         }
     }
 
-    getTrack(name) {
-        return this.getTracks().then(tracks => {
-            for (let track of tracks) {
-                if (name === track.name) {
-                    return track;
-                }
-            }
-            throw 'Track not found: ' + name;
-        });
-    }
-
     extractData(txt) {
         let dom = new DOMParser().parseFromString(txt, 'text/html'),
             links = Array.from(dom.links),
