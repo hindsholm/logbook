@@ -93,6 +93,7 @@ class MonthSelector {
         this.select.addEventListener('change', evt => {
             this.tripSelector.monthSelected(evt.target['selectedOptions'][0].value);
         });
+        this.reset();
     }
 
     setYear(year) {
@@ -118,6 +119,10 @@ class MonthSelector {
         });
         return Array.from(months);
     }
+
+    reset() {
+        this.select.innerHTML = '<option disabled selected value="">Month</option>';
+    }
 }
 
 class DaySelector {
@@ -129,6 +134,7 @@ class DaySelector {
             let track = this.tripSelector.tracks.find(t => name === t.name);
             this.tripSelector.trackSelected(track);
         });
+        this.reset();
     }
 
     setYear(year) {
