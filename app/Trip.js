@@ -4,6 +4,10 @@ export default class Trip {
         this.name = track.name;
     }
 
+    setDescription(descr) {
+        this.description = descr;
+    }
+
     setDuration(start, end) {
         this.start = start;
         this.end = end;

@@ -50,17 +50,24 @@ export default class Map {
         this.trackLayer.setSource(trackSrc);
     }
 
+    onTripLoaded(listener) {
+        this.listener = listener;
+    }
+
     readExtension(trip, feature) {
         let geometry = feature.getGeometry();
         if (geometry.getType() === 'MultiLineString') {
             let properties = feature.getProperties();
-            console.log('Description: ' + properties['desc']);
+            trip.setDescription(properties['desc']);
             if (geometry.getLayout() == 'XYZM') {
                 let start = new Date(1000 * geometry.getFirstCoordinate()[3]);
                 let end = new Date(1000 * geometry.getLastCoordinate()[3]);
                 trip.setDuration(start, end);
             } else {
                 console.log(`{trip.name} does not have XYZM layout`);
+            }
+            if (this.listener) {
+                this.listener(trip);
             }
         }
     }
