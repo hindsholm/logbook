@@ -60,6 +60,7 @@ export default class Map {
             let properties = feature.getProperties();
             trip.setDescription(properties['desc']);
             if (geometry.getLayout() == 'XYZM') {
+                console.log(ol.proj.toLonLat(geometry.getFirstCoordinate()));
                 let start = new Date(1000 * geometry.getFirstCoordinate()[3]);
                 let end = new Date(1000 * geometry.getLastCoordinate()[3]);
                 trip.setDuration(start, end);
