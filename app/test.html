@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map using native ECMAScript modules</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v5.1.3/css/ol.css" type="text/css">
+</head>
+
+<body>
+    <div id="map"></div>
+    <script type="module">
+        import Map from 'https://dev.jspm.io/npm:ol@5.1/Map.js';
+        import View from 'https://dev.jspm.io/npm:ol@5.1/View.js';
+        import TileLayer from 'https://dev.jspm.io/npm:ol@5.1/layer/Tile.js';
+        import OSM from 'https://dev.jspm.io/npm:ol@5.1/source/OSM.js';
+
+        const map = new Map({
+            layers: [
+                new TileLayer({
+                    source: new OSM()
+                })
+            ],
+            target: 'map',
+            view: new View({
+                center: [0, 0],
+                zoom: 2
+            })
+        });
+    </script>
+</body>
+
+</html>

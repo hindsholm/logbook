@@ -6,7 +6,5 @@
   "author": "morten@hindsholm.dk",
   "license": "MIT",
   "dependencies": {},
-  "devDependencies": {
-    "@types/openlayers": "^4.6.4"
-  }
+  "devDependencies": {}
 }

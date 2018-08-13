@@ -1,31 +1,43 @@
+import { fromLonLat, toLonLat } from 'https://dev.jspm.io/npm:ol@5.1.3/proj.js';
+import OlMap from 'https://dev.jspm.io/npm:ol@5.1.3/Map.js';
+import GPX from 'https://dev.jspm.io/npm:ol@5.1.3/format/GPX.js';
+import OSM from 'https://dev.jspm.io/npm:ol@5.1.3/source/OSM.js';
+import Stroke from 'https://dev.jspm.io/npm:ol@5.1.3/style/Stroke.js';
+import Style from 'https://dev.jspm.io/npm:ol@5.1.3/style/Style.js';
+import Tile from 'https://dev.jspm.io/npm:ol@5.1.3/layer/Tile.js';
+import VectorLayer from 'https://dev.jspm.io/npm:ol@5.1.3/layer/Vector.js';
+import VectorSource from 'https://dev.jspm.io/npm:ol@5.1.3/source/Vector.js';
+import View from 'https://dev.jspm.io/npm:ol@5.1.3/View.js';
+import XYZ from 'https://dev.jspm.io/npm:ol@5.1.3/source/XYZ.js';
+
 export default class Map {
     constructor() {
-        this.trackLayer = new ol.layer.Vector({
-            source: new ol.source.Vector(),
-            style: new ol.style.Style({
-                stroke: new ol.style.Stroke({ color: 'red', width: 2 })
+        this.trackLayer = new VectorLayer({
+            source: new VectorSource(),
+            style: new Style({
+                stroke: new Stroke({ color: 'red', width: 2 })
             }),
             renderOrder: null
         });
-        let land = new ol.layer.Tile({
-            source: new ol.source.OSM()
+        let land = new Tile({
+            source: new OSM()
             // source: new ol.source.BingMaps({
             //     key: 'AvzjjrvdUbpbaSZt6mBxjJf6-edLi-QZ6FBVuMz1KWO90sNeGqG8mlpJNoOcr8zB',
             //     imagerySet: 'AerialWithLabels',
             //     maxZoom: 19
             // })
         });
-        let sea = new ol.layer.Tile({
-            source: new ol.source.XYZ({
+        let sea = new Tile({
+            source: new XYZ({
                 url: 'http://t1.openseamap.org/seamark/{z}/{x}/{y}.png',
                 projection: undefined
             })
         });
-        let view = new ol.View({
-            center: ol.proj.fromLonLat([10.1, 56.7], 'EPSG:3857'),
+        let view = new View({
+            center: fromLonLat([10.1, 56.7], 'EPSG:3857'),
             zoom: 12
         });
-        this.map = new ol.Map({
+        this.map = new OlMap({
             target: 'map',
             layers: [land, sea, this.trackLayer],
             view: view
@@ -34,8 +46,8 @@ export default class Map {
 
     loadTrip(trip) {
         console.log('Loading ' + trip.name);
-        let trackSrc = new ol.source.Vector({
-            format: new ol.format.GPX({
+        let trackSrc = new VectorSource({
+            format: new GPX({
                 readExtensions: feature => {
                     this.readExtension(trip, feature);
                 }
@@ -60,7 +72,7 @@ export default class Map {
             let properties = feature.getProperties();
             trip.setDescription(properties['desc']);
             if (geometry.getLayout() == 'XYZM') {
-                console.log(ol.proj.toLonLat(geometry.getFirstCoordinate()));
+                console.log(toLonLat(geometry.getFirstCoordinate()));
                 let start = new Date(1000 * geometry.getFirstCoordinate()[3]);
                 let end = new Date(1000 * geometry.getLastCoordinate()[3]);
                 trip.setDuration(start, end);
