@@ -1,14 +1,14 @@
-import { fromLonLat, toLonLat } from 'https://dev.jspm.io/npm:ol@5.1.3/proj.js';
-import OlMap from 'https://dev.jspm.io/npm:ol@5.1.3/Map.js';
-import GPX from 'https://dev.jspm.io/npm:ol@5.1.3/format/GPX.js';
-import OSM from 'https://dev.jspm.io/npm:ol@5.1.3/source/OSM.js';
-import Stroke from 'https://dev.jspm.io/npm:ol@5.1.3/style/Stroke.js';
-import Style from 'https://dev.jspm.io/npm:ol@5.1.3/style/Style.js';
-import Tile from 'https://dev.jspm.io/npm:ol@5.1.3/layer/Tile.js';
-import VectorLayer from 'https://dev.jspm.io/npm:ol@5.1.3/layer/Vector.js';
-import VectorSource from 'https://dev.jspm.io/npm:ol@5.1.3/source/Vector.js';
-import View from 'https://dev.jspm.io/npm:ol@5.1.3/View.js';
-import XYZ from 'https://dev.jspm.io/npm:ol@5.1.3/source/XYZ.js';
+import { fromLonLat, toLonLat } from 'https://dev.jspm.io/npm:ol@5.2.0/proj.js';
+import OlMap from 'https://dev.jspm.io/npm:ol@5.2.0/Map.js';
+import GPX from 'https://dev.jspm.io/npm:ol@5.2.0/format/GPX.js';
+import OSM from 'https://dev.jspm.io/npm:ol@5.2.0/source/OSM.js';
+import Stroke from 'https://dev.jspm.io/npm:ol@5.2.0/style/Stroke.js';
+import Style from 'https://dev.jspm.io/npm:ol@5.2.0/style/Style.js';
+import Tile from 'https://dev.jspm.io/npm:ol@5.2.0/layer/Tile.js';
+import VectorLayer from 'https://dev.jspm.io/npm:ol@5.2.0/layer/Vector.js';
+import VectorSource from 'https://dev.jspm.io/npm:ol@5.2.0/source/Vector.js';
+import View from 'https://dev.jspm.io/npm:ol@5.2.0/View.js';
+import XYZ from 'https://dev.jspm.io/npm:ol@5.2.0/source/XYZ.js';
 
 export default class Map {
     constructor() {
