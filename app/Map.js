@@ -1,14 +1,14 @@
-import { fromLonLat, toLonLat } from 'https://dev.jspm.io/ol@5.3.0/proj.js';
-import OlMap from 'https://dev.jspm.io/ol@5.3.0/Map.js';
-import GPX from 'https://dev.jspm.io/ol@5.3.0/format/GPX.js';
-import OSM from 'https://dev.jspm.io/ol@5.3.0/source/OSM.js';
-import Stroke from 'https://dev.jspm.io/ol@5.3.0/style/Stroke.js';
-import Style from 'https://dev.jspm.io/ol@5.3.0/style/Style.js';
-import Tile from 'https://dev.jspm.io/ol@5.3.0/layer/Tile.js';
-import VectorLayer from 'https://dev.jspm.io/ol@5.3.0/layer/Vector.js';
-import VectorSource from 'https://dev.jspm.io/ol@5.3.0/source/Vector.js';
-import View from 'https://dev.jspm.io/ol@5.3.0/View.js';
-import XYZ from 'https://dev.jspm.io/ol@5.3.0/source/XYZ.js';
+import { fromLonLat, toLonLat } from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/proj.js';
+import OlMap from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/Map.js';
+import GPX from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/format/GPX.js';
+import OSM from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/OSM.js';
+import Stroke from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/style/Stroke.js';
+import Style from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/style/Style.js';
+import Tile from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/layer/Tile.js';
+import VectorLayer from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/layer/Vector.js';
+import VectorSource from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/Vector.js';
+import View from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/View.js';
+import XYZ from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/XYZ.js';
 
 export default class Map {
     constructor() {

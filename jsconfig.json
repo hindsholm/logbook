@@ -1,7 +1,12 @@
 {
     "compilerOptions": {
         "checkJs": true,
-        "target": "es2015"
+        "moduleResolution": "node",
+        "paths": {
+            "https://cdn.jsdelivr.net/gh/lit/dist@2.6.1/*": ["./manual_modules/lit/*"],
+            "https://cdn.jsdelivr.net/npm/ol@7.2.2/*": ["./node_modules/ol/*"]
+        },
+        "target": "es6"
     },
     "include": ["app/**/*"]
 }
