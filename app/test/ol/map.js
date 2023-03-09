@@ -1,9 +1,9 @@
-import { fromLonLat, toLonLat } from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/proj.js';
-import Map from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/Map.js';
-import View from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/View.js';
-import TileLayer from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/layer/Tile.js';
-import OSM from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/OSM.js';
-import XYZ from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/XYZ.js';
+import { fromLonLat, toLonLat } from 'ol/proj.js';
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import TileLayer from 'ol/layer/Tile.js';
+import OSM from 'ol/source/OSM.js';
+import XYZ from 'ol/source/XYZ.js';
 
 const map = new Map({
     layers: [

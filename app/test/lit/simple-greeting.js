@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2.6.1/core/lit-core.min.js';
+import { html, css, LitElement } from 'lit';
 
 export class SimpleGreeting extends LitElement {
     static styles = css`p { color: blue }`;

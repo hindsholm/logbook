@@ -1,14 +1,14 @@
-import { fromLonLat, toLonLat } from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/proj.js';
-import OlMap from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/Map.js';
-import GPX from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/format/GPX.js';
-import OSM from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/OSM.js';
-import Stroke from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/style/Stroke.js';
-import Style from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/style/Style.js';
-import Tile from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/layer/Tile.js';
-import VectorLayer from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/layer/Vector.js';
-import VectorSource from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/Vector.js';
-import View from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/View.js';
-import XYZ from 'https://cdn.jsdelivr.net/npm/ol@7.2.2/source/XYZ.js';
+import { fromLonLat, toLonLat } from 'ol/proj.js';
+import OlMap from 'ol/Map.js';
+import GPX from 'ol/format/GPX.js';
+import OSM from 'ol/source/OSM.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
+import Tile from 'ol/layer/Tile.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
+import View from 'ol/View.js';
+import XYZ from 'ol/source/XYZ.js';
 
 export default class Map {
     constructor() {

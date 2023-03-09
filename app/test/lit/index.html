@@ -1,7 +1,32 @@
 <!DOCTYPE html>
+
 <head>
-  <script type="module" src="./simple-greeting.js"></script>
+  <meta charset="utf-8">
+  <title>Lit - JSPM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
+  <!--
+    JSPM Generator Import Map
+    Edit URL: https://generator.jspm.io/#U2VhYGBkDM0rySzJSU1hyMkscTDSM9MzBABIryrOGAA
+  -->
+  <script type="importmap">
+    {
+      "imports": {
+        "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js"
+      },
+      "scopes": {
+        "https://ga.jspm.io/": {
+          "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/development/reactive-element.js",
+          "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/development/lit-element.js",
+          "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/development/lit-html.js",
+          "lit-html/is-server.js": "https://ga.jspm.io/npm:lit-html@2.6.1/development/is-server.js"
+        }
+      }
+    }
+    </script>
+
+  <script type="module" src="./simple-greeting.js"></script>
   <simple-greeting name="Hadsund"></simple-greeting>
 </body>
