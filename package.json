@@ -6,8 +6,8 @@
   "author": "morten@hindsholm.dk",
   "license": "MIT",
   "dependencies": {
-    "lit": "2.6.1",
-    "ol": "7.3.0"
+    "lit": "3.1.2",
+    "ol": "9.1.0"
   },
   "devDependencies": {}
 }
