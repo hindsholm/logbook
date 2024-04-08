@@ -19,3 +19,4 @@ Styling is provided by the excellent [Surface project](https://github.com/mildre
 
 - Analysis of tracks using Google Charts
 - Historical weather data
+- Photos
