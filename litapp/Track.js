@@ -6,4 +6,8 @@ export default class Track {
         this.month = month;
         this.day = day;
     }
+
+    toString() {
+        return `${this.year}-${this.month}-${this.day} ${this.name}`;
+    }
 }

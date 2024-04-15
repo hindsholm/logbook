@@ -14,11 +14,14 @@ export class LogbookApp extends LitElement {
     constructor() {
         super();
         this.trackService = new TrackService();
+        this._tracks = [];
     }
 
     connectedCallback() {
         super.connectedCallback();
-        this._tracks = this.trackService.getTracks();
+        this.trackService.getTracks().then(t => {
+            this._tracks = t;
+        });
     }
 
     render() {

@@ -3,10 +3,6 @@ import { logbookStyles } from './styles.js';
 
 export class TripSelector extends LitElement {
 
-    static properties = {
-        tracks: {}
-    };
-
     static styles = [
         logbookStyles,
         css`
@@ -38,18 +34,46 @@ export class TripSelector extends LitElement {
         `
     ];
 
+    static properties = {
+        tracks: {}
+    };
+
+    constructor() {
+        super();
+    }
+
+    willUpdate(changedProperties) {
+        if (changedProperties.has('tracks')) {
+            console.log(this.tracks);
+        }
+    }
+
     render() {
-        console.log(this.tracks);
         return html`
             <div>
                 <button id="previous" class="btn--raised nudge--right" title="Previous Trip">&lt;</button>
-                <select id="year" required><option disabled selected value="">Year</option></select>
+                <select id="year" required @change="${this.yearSelected}">
+                    <option disabled selected value="">Year</option>
+                    ${this.getUniqueYears().map(year =>
+                        html`<option value="${year}">${year}</option>`
+                    )}
+                </select>
                 <select id="month" required><option disabled selected value="">Month</option></select>
                 <select id="day" required><option disabled selected value="">Day</option></select>
                 <button id="next" class="btn--raised nudge--left nudge--right" title="Next Trip">&gt;</button>
             </div>
         `;
     }
+
+    yearSelected(evt) {
+        const value = evt.target['selectedOptions'][0].value;
+        console.log('year:', value);
+    }
+
+    getUniqueYears() {
+        return [...new Set(this.tracks.map(track => track.year))];
+    }
+
 }
 
 customElements.define('lb-trip-selector', TripSelector);
