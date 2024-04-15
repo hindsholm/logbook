@@ -35,11 +35,17 @@ export class TripSelector extends LitElement {
     ];
 
     static properties = {
-        tracks: {}
+        tracks: { type: Array },
+        _selectedYear: { state: true },
+        _selectedMonth: { state: true },
+        _selectedTrack: { state: true }
     };
 
     constructor() {
         super();
+        this._selectedYear = '';
+        this._selectedMonth = '';
+        this._selectedTrack = '';
     }
 
     willUpdate(changedProperties) {
@@ -54,24 +60,76 @@ export class TripSelector extends LitElement {
                 <button id="previous" class="btn--raised nudge--right" title="Previous Trip">&lt;</button>
                 <select id="year" required @change="${this.yearSelected}">
                     <option disabled selected value="">Year</option>
-                    ${this.getUniqueYears().map(year =>
+                    ${this.getYears().map(year =>
                         html`<option value="${year}">${year}</option>`
                     )}
                 </select>
-                <select id="month" required><option disabled selected value="">Month</option></select>
-                <select id="day" required><option disabled selected value="">Day</option></select>
+                <select id="month" required @change="${this.monthSelected}">
+                    <option disabled selected value="">Month</option>
+                    ${this.getMonths().map(month =>
+                        html`<option value="${month}">${month}</option>`
+                    )}
+                </select>
+                <select id="day" required @change="${this.trackSelected}">
+                    <option disabled selected value="">Day</option>
+                    ${this.getTracksForMonth().map(track =>
+                        html`<option value="${track.name}">${track.day}</option>`
+                    )}
+                </select>
                 <button id="next" class="btn--raised nudge--left nudge--right" title="Next Trip">&gt;</button>
             </div>
         `;
     }
 
-    yearSelected(evt) {
-        const value = evt.target['selectedOptions'][0].value;
-        console.log('year:', value);
+    updated(changedProperties) {
+        this.renderRoot.querySelector('#month')['value'] = this._selectedMonth;
+        this.renderRoot.querySelector('#day')['value'] = this._selectedTrack;
     }
 
-    getUniqueYears() {
+    getYears() {
         return [...new Set(this.tracks.map(track => track.year))];
+    }
+
+    yearSelected(evt) {
+        const year = evt.target['selectedOptions'][0].value;
+        console.log('selected year:', year);
+        this._selectedYear = year;
+        this.resetMonth();
+    }
+
+    getMonths() {
+        return [...new Set(this.tracks
+            .filter(track => this._selectedYear === track.year)
+            .map(track => track.month)
+        )];
+    }
+
+    monthSelected(evt) {
+        const month = evt.target['selectedOptions'][0].value;
+        console.log('selected month:', month);
+        this._selectedMonth = month;
+        this.resetDay();
+    }
+
+    resetMonth() {
+        this._selectedMonth = '';
+        this.resetDay();
+    }
+
+    getTracksForMonth() {
+        return this.tracks
+            .filter(track => this._selectedYear === track.year && this._selectedMonth === track.month);
+    }
+
+    trackSelected(evt) {
+        const trackName = evt.target['selectedOptions'][0].value;
+        this._selectedTrack = trackName;
+        const track = this.tracks.find(t => t.name === trackName);
+        console.log('selected track:', track);
+    }
+
+    resetDay() {
+        this._selectedTrack = '';
     }
 
 }
