@@ -1,5 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { logbookStyles } from './styles.js';
+import Track from './Track.js';
 
 export class TripSelector extends LitElement {
 
@@ -35,22 +36,19 @@ export class TripSelector extends LitElement {
     ];
 
     static properties = {
-        tracks: { type: Array },
-        _selectedYear: { state: true },
-        _selectedMonth: { state: true },
-        _selectedTrack: { state: true }
+        tracks: { type: Array }
     };
 
-    constructor() {
-        super();
-        this._selectedYear = '';
-        this._selectedMonth = '';
-        this._selectedTrack = '';
-    }
+    /** @type {HTMLSelectElement} */
+    yearSelectElement;
+    /** @type {HTMLSelectElement} */
+    monthSelectElement;
+    /** @type {HTMLSelectElement} */
+    daySelectElement;
 
     willUpdate(changedProperties) {
         if (changedProperties.has('tracks')) {
-            console.log(this.tracks);
+            console.log('tracks:', this.tracks);
         }
     }
 
@@ -81,9 +79,10 @@ export class TripSelector extends LitElement {
         `;
     }
 
-    updated(changedProperties) {
-        this.renderRoot.querySelector('#month')['value'] = this._selectedMonth;
-        this.renderRoot.querySelector('#day')['value'] = this._selectedTrack;
+    firstUpdated() {
+        this.yearSelectElement = this.renderRoot.querySelector('#year');
+        this.monthSelectElement = this.renderRoot.querySelector('#month');
+        this.daySelectElement = this.renderRoot.querySelector('#day');
     }
 
     getYears() {
@@ -91,45 +90,50 @@ export class TripSelector extends LitElement {
     }
 
     yearSelected(evt) {
-        const year = evt.target['selectedOptions'][0].value;
-        console.log('selected year:', year);
-        this._selectedYear = year;
+        console.log('selected year:', evt.target['selectedOptions'][0].value);
         this.resetMonth();
+        this.requestUpdate(); // Component state is unchanged so no automatic update
+    }
+
+    getSelectedYear() {
+        return this.yearSelectElement.value;
     }
 
     getMonths() {
         return [...new Set(this.tracks
-            .filter(track => this._selectedYear === track.year)
+            .filter(track => this.getSelectedYear() === track.year)
             .map(track => track.month)
         )];
     }
 
     monthSelected(evt) {
-        const month = evt.target['selectedOptions'][0].value;
-        console.log('selected month:', month);
-        this._selectedMonth = month;
+        console.log('selected month:', evt.target['selectedOptions'][0].value);
         this.resetDay();
+        this.requestUpdate(); // Component state is unchanged so no automatic update
+    }
+
+    getSelectedMonth() {
+        return this.monthSelectElement.value;
     }
 
     resetMonth() {
-        this._selectedMonth = '';
+        this.monthSelectElement.value = '';
         this.resetDay();
     }
 
     getTracksForMonth() {
         return this.tracks
-            .filter(track => this._selectedYear === track.year && this._selectedMonth === track.month);
+            .filter(track => this.getSelectedYear() === track.year && this.getSelectedMonth() === track.month);
     }
 
     trackSelected(evt) {
         const trackName = evt.target['selectedOptions'][0].value;
-        this._selectedTrack = trackName;
         const track = this.tracks.find(t => t.name === trackName);
         console.log('selected track:', track);
     }
 
     resetDay() {
-        this._selectedTrack = '';
+        this.daySelectElement.value = '';
     }
 
 }
