@@ -1,6 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { logbookStyles } from './styles.js';
-import Track from './Track.js';
+import Trip from './Trip.js';
 
 export class TripSelector extends LitElement {
 
@@ -68,7 +68,7 @@ export class TripSelector extends LitElement {
                         html`<option value="${month}">${month}</option>`
                     )}
                 </select>
-                <select id="day" required @change="${this.trackSelected}">
+                <select id="day" required @change="${this.daySelected}">
                     <option disabled selected value="">Day</option>
                     ${this.getTracksForMonth().map(track =>
                         html`<option value="${track.name}">${track.day}</option>`
@@ -126,10 +126,16 @@ export class TripSelector extends LitElement {
             .filter(track => this.getSelectedYear() === track.year && this.getSelectedMonth() === track.month);
     }
 
-    trackSelected(evt) {
+    daySelected(evt) {
         const trackName = evt.target['selectedOptions'][0].value;
         const track = this.tracks.find(t => t.name === trackName);
         console.log('selected track:', track);
+        const event = new CustomEvent('trip-selected', {
+            bubbles: true,
+            composed: true,
+            detail: new Trip(track)
+        });
+        this.dispatchEvent(event);
     }
 
     resetDay() {

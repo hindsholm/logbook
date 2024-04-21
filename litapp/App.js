@@ -26,10 +26,14 @@ export class LogbookApp extends LitElement {
 
     render() {
         return html`
-            <lb-header .tracks=${this._tracks}></lb-header>
+            <lb-header .tracks=${this._tracks} @trip-selected=${this.tripSelected}></lb-header>
             <lb-main></lb-main>
             <lb-footer></lb-footer>
         `;
+    }
+
+    tripSelected(evt) {
+        console.log(evt);
     }
 }
 
