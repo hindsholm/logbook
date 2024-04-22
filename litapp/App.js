@@ -2,7 +2,7 @@ import { html, css, LitElement } from 'lit';
 import TrackService from './TrackService.js';
 
 import './Header.js'
-import './Main.js'
+import './Map.js'
 import './Footer.js'
 
 export class LogbookApp extends LitElement {
@@ -27,7 +27,7 @@ export class LogbookApp extends LitElement {
     render() {
         return html`
             <lb-header .tracks=${this._tracks} @trip-selected=${this.tripSelected}></lb-header>
-            <lb-main></lb-main>
+            <lb-map></lb-map>
             <lb-footer></lb-footer>
         `;
     }

@@ -1,13 +1,13 @@
 import { html, css, LitElement } from 'lit';
 import { logbookStyles } from './styles.js';
-import Map from 'ol/Map.js';
+import OLMap from 'ol/Map.js';
 import View from 'ol/View.js';
 import TileLayer from 'ol/layer/Tile.js';
 import OSM from 'ol/source/OSM.js';
 import XYZ from 'ol/source/XYZ.js';
 import { fromLonLat, toLonLat } from 'ol/proj.js';
 
-export class Main extends LitElement {
+export class Map extends LitElement {
     static styles = [
         logbookStyles,
         css`
@@ -25,7 +25,7 @@ export class Main extends LitElement {
 
     constructor() {
         super();
-        this.map = new Map({
+        this.map = new OLMap({
             layers: [
                 new TileLayer({
                     source: new OSM()
@@ -59,4 +59,4 @@ export class Main extends LitElement {
     }
 }
 
-customElements.define('lb-main', Main);
+customElements.define('lb-map', Map);
