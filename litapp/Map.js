@@ -1,7 +1,9 @@
 import { html, css, LitElement } from 'lit';
 
 import { fromLonLat, toLonLat } from 'ol/proj.js';
+import Feature from 'ol/Feature.js';
 import GPX from 'ol/format/GPX.js';
+import Geometry from 'ol/geom/Geometry.js';
 import OLMap from 'ol/Map.js';
 import OSM from 'ol/source/OSM.js';
 import Stroke from 'ol/style/Stroke.js';
@@ -62,15 +64,15 @@ export class Map extends LitElement {
         });
     }
 
-    willUpdate(changedProperties) {
-        if (changedProperties.has('trip')) {
-            this.loadTrip();
-        }
-    }
-
     firstUpdated() {
         const mapNode = this.renderRoot.querySelector('#map');
         this.map.setTarget(mapNode);
+    }
+
+    updated(changedProperties) {
+        if (changedProperties.has('trip')) {
+            this.loadTrip();
+        }
     }
 
     render() {
@@ -86,7 +88,7 @@ export class Map extends LitElement {
             return;
         }
         console.log('Loading ' + this.trip.name);
-        let trackSrc = new VectorSource({
+        const trackSrc = new VectorSource({
             format: new GPX({
                 readExtensions: feature => {
                     this.readExtension(this.trip, feature);
@@ -102,15 +104,19 @@ export class Map extends LitElement {
         this.trackLayer.setSource(trackSrc);
     }
 
+    /**
+     * @param {Trip} trip
+     * @param {Feature<Geometry>} feature
+     */
     readExtension(trip, feature) {
-        let geometry = feature.getGeometry();
+        const geometry = feature.getGeometry();
         if (geometry.getType() === 'MultiLineString') {
-            let properties = feature.getProperties();
+            const properties = feature.getProperties();
             trip.setDescription(properties['desc']);
             if (geometry.getLayout() == 'XYZM') {
                 console.log(toLonLat(geometry.getFirstCoordinate()));
-                let start = new Date(1000 * geometry.getFirstCoordinate()[3]);
-                let end = new Date(1000 * geometry.getLastCoordinate()[3]);
+                const start = new Date(1000 * geometry.getFirstCoordinate()[3]);
+                const end = new Date(1000 * geometry.getLastCoordinate()[3]);
                 trip.setDuration(start, end);
             } else {
                 console.log(`{trip.name} does not have XYZM layout`);
