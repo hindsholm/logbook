@@ -28,7 +28,7 @@ export class Map extends LitElement {
                 overflow: hidden;
             }
             #map {
-                height: 800px;
+                height: 600px;
             }
         `
     ];
@@ -38,6 +38,8 @@ export class Map extends LitElement {
 
     constructor() {
         super();
+        /** @type {Trip} */
+        this.trip;
         this.trackLayer = new VectorLayer({
             source: new VectorSource(),
             style: new Style({

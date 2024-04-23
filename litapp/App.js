@@ -14,6 +14,8 @@ export class LogbookApp extends LitElement {
 
     constructor() {
         super();
+        /** @type {Trip} */
+        this._trip;
         this.trackService = new TrackService();
         this._tracks = [];
     }
@@ -29,14 +31,13 @@ export class LogbookApp extends LitElement {
         return html`
             <lb-header .tracks=${this._tracks} @trip-selected=${this.tripSelected}></lb-header>
             <lb-map .trip=${this._trip}></lb-map>
-            <lb-footer></lb-footer>
+            <lb-footer .trip=${this._trip}></lb-footer>
         `;
     }
 
     /** @param {CustomEvent<Trip>} evt */
     tripSelected(evt) {
         this._trip = evt.detail;
-        console.log(this._trip);
     }
 }
 
