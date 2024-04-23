@@ -8,7 +8,8 @@ import './Footer.js'
 export class LogbookApp extends LitElement {
 
     static properties = {
-        _tracks: { state: true }
+        _tracks: { state: true },
+        _trip: { state: true }
     };
 
     constructor() {
@@ -27,13 +28,15 @@ export class LogbookApp extends LitElement {
     render() {
         return html`
             <lb-header .tracks=${this._tracks} @trip-selected=${this.tripSelected}></lb-header>
-            <lb-map></lb-map>
+            <lb-map .trip=${this._trip}></lb-map>
             <lb-footer></lb-footer>
         `;
     }
 
+    /** @param {CustomEvent<Trip>} evt */
     tripSelected(evt) {
-        console.log(evt);
+        this._trip = evt.detail;
+        console.log(this._trip);
     }
 }
 

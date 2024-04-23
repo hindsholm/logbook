@@ -1,11 +1,19 @@
 import { html, css, LitElement } from 'lit';
-import { logbookStyles } from './styles.js';
-import OLMap from 'ol/Map.js';
-import View from 'ol/View.js';
-import TileLayer from 'ol/layer/Tile.js';
-import OSM from 'ol/source/OSM.js';
-import XYZ from 'ol/source/XYZ.js';
+
 import { fromLonLat, toLonLat } from 'ol/proj.js';
+import GPX from 'ol/format/GPX.js';
+import OLMap from 'ol/Map.js';
+import OSM from 'ol/source/OSM.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
+import TileLayer from 'ol/layer/Tile.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
+import View from 'ol/View.js';
+import XYZ from 'ol/source/XYZ.js';
+
+import { logbookStyles } from './styles.js';
+import Trip from './Trip.js';
 
 export class Map extends LitElement {
     static styles = [
@@ -22,27 +30,42 @@ export class Map extends LitElement {
             }
         `
     ];
+    static properties = {
+        trip: { type: Trip }
+    };
 
     constructor() {
         super();
-        this.map = new OLMap({
-            layers: [
-                new TileLayer({
-                    source: new OSM()
-                }),
-                new TileLayer({
-                    source: new XYZ({
-                        url: 'http://t1.openseamap.org/seamark/{z}/{x}/{y}.png',
-                        projection: undefined
-                    })
-                })
-            ],
-            target: 'map',
-            view: new View({
-                center: fromLonLat([10.1, 56.7], 'EPSG:3857'),
-                zoom: 12
+        this.trackLayer = new VectorLayer({
+            source: new VectorSource(),
+            style: new Style({
+                stroke: new Stroke({ color: 'red', width: 2 })
+            }),
+            renderOrder: null
+        });
+        let land = new TileLayer({
+            source: new OSM()
+        });
+        let sea = new TileLayer({
+            source: new XYZ({
+                url: 'http://t1.openseamap.org/seamark/{z}/{x}/{y}.png',
+                projection: undefined
             })
         });
+        let view = new View({
+            center: fromLonLat([10.1, 56.7], 'EPSG:3857'),
+            zoom: 12
+        });
+        this.map = new OLMap({
+            layers: [land, sea, this.trackLayer],
+            view: view
+        });
+    }
+
+    willUpdate(changedProperties) {
+        if (changedProperties.has('trip')) {
+            this.loadTrip();
+        }
     }
 
     firstUpdated() {
@@ -57,6 +80,44 @@ export class Map extends LitElement {
             </main>
         `;
     }
+
+    loadTrip() {
+        if (!this.trip) {
+            return;
+        }
+        console.log('Loading ' + this.trip.name);
+        let trackSrc = new VectorSource({
+            format: new GPX({
+                readExtensions: feature => {
+                    this.readExtension(this.trip, feature);
+                }
+            }),
+            url: this.trip.track.url
+        });
+        trackSrc.once('change', e => {
+            if (this.map) {
+                this.map.getView().fit(trackSrc.getExtent(), { size: this.map.getSize(), padding: [10, 10, 10, 10] });
+            }
+        });
+        this.trackLayer.setSource(trackSrc);
+    }
+
+    readExtension(trip, feature) {
+        let geometry = feature.getGeometry();
+        if (geometry.getType() === 'MultiLineString') {
+            let properties = feature.getProperties();
+            trip.setDescription(properties['desc']);
+            if (geometry.getLayout() == 'XYZM') {
+                console.log(toLonLat(geometry.getFirstCoordinate()));
+                let start = new Date(1000 * geometry.getFirstCoordinate()[3]);
+                let end = new Date(1000 * geometry.getLastCoordinate()[3]);
+                trip.setDuration(start, end);
+            } else {
+                console.log(`{trip.name} does not have XYZM layout`);
+            }
+        }
+    }
+
 }
 
 customElements.define('lb-map', Map);
