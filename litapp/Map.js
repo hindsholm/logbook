@@ -47,16 +47,16 @@ export class Map extends LitElement {
             }),
             renderOrder: null
         });
-        let land = new TileLayer({
+        const land = new TileLayer({
             source: new OSM()
         });
-        let sea = new TileLayer({
+        const sea = new TileLayer({
             source: new XYZ({
                 url: 'http://t1.openseamap.org/seamark/{z}/{x}/{y}.png',
                 projection: undefined
             })
         });
-        let view = new View({
+        const view = new View({
             center: fromLonLat([10.1, 56.7], 'EPSG:3857'),
             zoom: 12
         });
@@ -100,7 +100,10 @@ export class Map extends LitElement {
         });
         trackSrc.once('change', e => {
             if (this.map) {
-                this.map.getView().fit(trackSrc.getExtent(), { size: this.map.getSize(), padding: [10, 10, 10, 10] });
+                this.map.getView().fit(trackSrc.getExtent(), {
+                    size: this.map.getSize(),
+                    padding: [20, 20, 20, 20]
+                });
             }
         });
         this.trackLayer.setSource(trackSrc);
@@ -115,13 +118,13 @@ export class Map extends LitElement {
         if (geometry.getType() === 'MultiLineString') {
             const properties = feature.getProperties();
             trip.setDescription(properties['desc']);
-            if (geometry.getLayout() == 'XYZM') {
+            if (geometry.getLayout() === 'XYZM') {
                 console.log(toLonLat(geometry.getFirstCoordinate()));
                 const start = new Date(1000 * geometry.getFirstCoordinate()[3]);
                 const end = new Date(1000 * geometry.getLastCoordinate()[3]);
                 trip.setDuration(start, end);
             } else {
-                console.log(`{trip.name} does not have XYZM layout`);
+                console.log(`${trip.name} does not have XYZM layout`);
             }
         }
     }

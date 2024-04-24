@@ -17,14 +17,14 @@ export default class TrackService {
     }
 
     extractData(txt) {
-        let dom = new DOMParser().parseFromString(txt, 'text/html'),
+        const dom = new DOMParser().parseFromString(txt, 'text/html'),
             links = Array.from(dom.links),
             tracks = [];
-        for (let link of links) {
-            let href = link.getAttribute('href'),
+        for (const link of links) {
+            const href = link.getAttribute('href'),
                 isGpx = href.match(/([^/]+)\.gpx$/);
             if (isGpx) {
-                let ymd = isGpx[1].match(/(\d{4})-?(\d{2})-?(\d{2})(.*)/);
+                const ymd = isGpx[1].match(/(\d{4})-?(\d{2})-?(\d{2})(.*)/);
                 if (ymd) {
                     tracks.push(
                         new Track(`${ymd[1]}-${ymd[2]}-${ymd[3]}${ymd[4]}`,

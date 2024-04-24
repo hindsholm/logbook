@@ -25,8 +25,7 @@ export class Footer extends LitElement {
                         ${this.trip.name} from ${this.format(this.trip.start)} to ${this.format(this.trip.end)} ${this.trip.description || ''}
                     </div>
                 </footer>`
-            : html`
-                <footer><div id="footer" class="nudge--left no-margin-vertical color--white">Select year, month and day</div></footer>`;
+            : html`<footer><div id="footer" class="nudge--left no-margin-vertical color--white">Select year, month and day</div></footer>`;
     }
 
     /** @param {Date} date */
