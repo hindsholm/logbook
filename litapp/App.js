@@ -9,11 +9,14 @@ export class LogbookApp extends LitElement {
 
     static properties = {
         _tracks: { state: true },
+        _track: { state: true },
         _trip: { state: true }
     };
 
     constructor() {
         super();
+        /** @type {Track} */
+        this._track
         /** @type {Trip} */
         this._trip;
         this.trackService = new TrackService();
@@ -29,14 +32,19 @@ export class LogbookApp extends LitElement {
 
     render() {
         return html`
-            <lb-header .tracks=${this._tracks} @trip-selected=${this.tripSelected}></lb-header>
-            <lb-map .trip=${this._trip}></lb-map>
+            <lb-header .tracks=${this._tracks} @track-selected=${this.trackSelected}></lb-header>
+            <lb-map .track=${this._track} @trip-loaded=${this.tripLoaded}></lb-map>
             <lb-footer .trip=${this._trip}></lb-footer>
         `;
     }
 
+    /** @param {CustomEvent<Track>} evt */
+    trackSelected(evt) {
+        this._track = evt.detail;
+    }
+
     /** @param {CustomEvent<Trip>} evt */
-    tripSelected(evt) {
+    tripLoaded(evt) {
         this._trip = evt.detail;
     }
 }

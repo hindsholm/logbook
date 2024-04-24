@@ -15,6 +15,7 @@ import View from 'ol/View.js';
 import XYZ from 'ol/source/XYZ.js';
 
 import { logbookStyles } from './styles.js';
+import Track from './Track.js';
 import Trip from './Trip.js';
 
 export class Map extends LitElement {
@@ -33,13 +34,13 @@ export class Map extends LitElement {
         `
     ];
     static properties = {
-        trip: { type: Trip }
+        track: { type: Track }
     };
 
     constructor() {
         super();
-        /** @type {Trip} */
-        this.trip;
+        /** @type {Track} */
+        this.track;
         this.trackLayer = new VectorLayer({
             source: new VectorSource(),
             style: new Style({
@@ -72,8 +73,8 @@ export class Map extends LitElement {
     }
 
     updated(changedProperties) {
-        if (changedProperties.has('trip')) {
-            this.loadTrip();
+        if (changedProperties.has('track')) {
+            this.loadTrack();
         }
     }
 
@@ -85,18 +86,18 @@ export class Map extends LitElement {
         `;
     }
 
-    loadTrip() {
-        if (!this.trip) {
+    loadTrack() {
+        if (!this.track) {
             return;
         }
-        console.log('Loading ' + this.trip.name);
+        console.log('Loading ' + this.track.name);
         const trackSrc = new VectorSource({
             format: new GPX({
                 readExtensions: feature => {
-                    this.readExtension(this.trip, feature);
+                    this.readExtension(feature);
                 }
             }),
-            url: this.trip.track.url
+            url: this.track.url
         });
         trackSrc.once('change', e => {
             if (this.map) {
@@ -110,22 +111,27 @@ export class Map extends LitElement {
     }
 
     /**
-     * @param {Trip} trip
      * @param {Feature<Geometry>} feature
      */
-    readExtension(trip, feature) {
+    readExtension(feature) {
         const geometry = feature.getGeometry();
         if (geometry.getType() === 'MultiLineString') {
-            const properties = feature.getProperties();
-            trip.setDescription(properties['desc']);
+            const description = (feature.getProperties())['desc'];
+            let start = null;
+            let end = null;
             if (geometry.getLayout() === 'XYZM') {
-                console.log(toLonLat(geometry.getFirstCoordinate()));
-                const start = new Date(1000 * geometry.getFirstCoordinate()[3]);
-                const end = new Date(1000 * geometry.getLastCoordinate()[3]);
-                trip.setDuration(start, end);
+                start = new Date(1000 * geometry.getFirstCoordinate()[3]);
+                end = new Date(1000 * geometry.getLastCoordinate()[3]);
             } else {
-                console.log(`${trip.name} does not have XYZM layout`);
+                console.log(`${this.track.name} does not have XYZM layout`);
             }
+            const event = new CustomEvent('trip-loaded', {
+                bubbles: true,
+                composed: true,
+                detail: new Trip(this.track, description, start, end)
+            });
+            this.dispatchEvent(event);
+
         }
     }
 

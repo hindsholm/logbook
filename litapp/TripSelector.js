@@ -119,10 +119,10 @@ export class TripSelector extends LitElement {
         const trackName = evt.target['selectedOptions'][0].value;
         const track = this.tracks.find(t => t.name === trackName);
         console.log('selected track:', track);
-        const event = new CustomEvent('trip-selected', {
+        const event = new CustomEvent('track-selected', {
             bubbles: true,
             composed: true,
-            detail: new Trip(track)
+            detail: track
         });
         this.dispatchEvent(event);
     }
