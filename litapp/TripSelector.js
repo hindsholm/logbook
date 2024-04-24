@@ -1,9 +1,9 @@
 import { html, css, LitElement } from 'lit';
 import { logbookStyles } from './styles.js';
-import Trip from './Trip.js';
+import Track from './Track.js';
 
+// TODO: Rename to TrackSelector
 export class TripSelector extends LitElement {
-
     static styles = [
         logbookStyles,
         css`
@@ -119,16 +119,22 @@ export class TripSelector extends LitElement {
         const trackName = evt.target['selectedOptions'][0].value;
         const track = this.tracks.find(t => t.name === trackName);
         console.log('selected track:', track);
-        const event = new CustomEvent('track-selected', {
-            bubbles: true,
-            composed: true,
-            detail: track
-        });
-        this.dispatchEvent(event);
+        this.dispatchTrackSelected(track);
     }
 
     resetDay() {
         this.daySelectElement.value = '';
+    }
+
+    /**
+     * @param {Track} track
+     */
+    dispatchTrackSelected(track) {
+        this.dispatchEvent(new CustomEvent('track-selected', {
+            bubbles: true,
+            composed: true,
+            detail: track
+        }));
     }
 
 }

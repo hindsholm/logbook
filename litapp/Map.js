@@ -125,16 +125,19 @@ export class Map extends LitElement {
             } else {
                 console.log(`${this.track.name} does not have XYZM layout`);
             }
-            const event = new CustomEvent('trip-loaded', {
-                bubbles: true,
-                composed: true,
-                detail: new Trip(this.track, description, start, end)
-            });
-            this.dispatchEvent(event);
-
+            const trip = new Trip(this.track, description, start, end);
+            this.dispatchTripLoaded(trip);
         }
     }
 
+    /** @param {Trip} trip */
+    dispatchTripLoaded(trip) {
+        this.dispatchEvent(new CustomEvent('trip-loaded', {
+            bubbles: true,
+            composed: true,
+            detail: trip
+        }));
+    }
 }
 
 customElements.define('lb-map', Map);
