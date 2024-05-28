@@ -26,7 +26,7 @@ export class Header extends LitElement {
             <header class="container--baseline">
                 <h1 class="nudge--left">Logbook</h1>
                 <div style="flex: 1 1 100%"></div>
-                <lb-trip-selector .tracks=${this.tracks} style="flex: none"></lb-trip-selector>
+                <lb-trip-selector .tracks=${this.tracks}></lb-trip-selector>
             </header>
         `;
     }

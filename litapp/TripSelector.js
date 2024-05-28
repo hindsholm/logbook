@@ -7,17 +7,18 @@ export class TripSelector extends LitElement {
     static styles = [
         logbookStyles,
         css`
+            :host {
+                flex: none;
+            }
             select {
                 color: white;
                 background-color: transparent;
                 text-align: center;
                 font-size: 100%;
             }
-
             select option {
                 background-color: #2980b9;
             }
-
             select:invalid {
                 box-shadow: none !important;
             }
