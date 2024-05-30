@@ -2,8 +2,7 @@ import { html, css, LitElement } from 'lit';
 import { logbookStyles } from './styles.js';
 import Track from './Track.js';
 
-// TODO: Rename to TrackSelector
-export class TripSelector extends LitElement {
+export class TrackSelector extends LitElement {
     static styles = [
         logbookStyles,
         css`
@@ -140,4 +139,4 @@ export class TripSelector extends LitElement {
 
 }
 
-customElements.define('lb-trip-selector', TripSelector);
+customElements.define('lb-trip-selector', TrackSelector);

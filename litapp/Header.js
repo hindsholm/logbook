@@ -1,7 +1,7 @@
 import { html, css, LitElement } from 'lit';
 import { logbookStyles } from './styles.js';
 
-import './TripSelector.js'
+import './TrackSelector.js'
 
 export class Header extends LitElement {
 
