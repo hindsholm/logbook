@@ -22,14 +22,14 @@ export class Map extends LitElement {
     static styles = [
         logbookStyles,
         css`
-            main {
+            :host {
                 margin: 0;
                 padding: 0;
                 flex: 1 1 100%;
                 overflow: hidden;
             }
             #map {
-                height: 600px;
+                height: 100%;
             }
         `
     ];
@@ -80,9 +80,7 @@ export class Map extends LitElement {
 
     render() {
         return html`
-            <main>
-                <div id="map"></div>
-            </main>
+            <div id="map"></div>
         `;
     }
 

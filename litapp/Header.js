@@ -15,7 +15,6 @@ export class Header extends LitElement {
             header {
                 margin: 0;
                 padding: 0;
-                flex: none;
                 padding-top: 1em;
             }
         `
